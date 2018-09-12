@@ -31,3 +31,5 @@ const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Server running on port ${port}`));
 
 app.get("/api", (req, res) => res.json({ msg: "Olha o pisão!" }));
+
+module.exports = app;
