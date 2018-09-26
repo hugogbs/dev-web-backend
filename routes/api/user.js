@@ -13,10 +13,10 @@ router.get("/:id", (req, res) =>
   ])
 );
 
-// @route   POST api/users/resgister
+// @route   POST api/users/
 // @desc    Register user
 // @access  Public
-router.post("/register", (req, res) =>
+router.post("/", (req, res) =>
   res.json({ temp: "Registro do usuário" })
 );
 

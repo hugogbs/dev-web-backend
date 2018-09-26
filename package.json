@@ -20,11 +20,14 @@
   "homepage": "https://github.com/hugogbs/dev-web-backend#readme",
   "dependencies": {
     "body-parser": "^1.18.3",
+    "cors": "^2.8.4",
     "express": "^4.16.3",
+    "memory-cache": "^0.2.0",
     "morgan": "^1.9.0",
     "nodemon": "^1.18.4"
   },
   "devDependencies": {
+    "mongoose": "^5.2.14",
     "supertest": "^3.3.0"
   }
 }
