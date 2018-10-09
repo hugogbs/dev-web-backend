@@ -2,10 +2,10 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const mongoose = require("mongoose");
-const cors = require('cors')
+const cors = require("cors");
 const passport = require("passport");
-const session = require('express-session')
-const LocalStrategy = require('passport-local').Strategy;
+const session = require("express-session");
+const LocalStrategy = require("passport-local").Strategy;
 
 // mongoose.connect('mongodb://localhost:4000/test', { useNewUrlParser: true })
 //   .then(() => console.log("MongoDB Connected"))
@@ -13,21 +13,28 @@ const LocalStrategy = require('passport-local').Strategy;
 
 const app = express();
 
-app.use(session({ secret: 'passport-tutorial', cookie: { maxAge: 60000 }, resave: false, saveUninitialized: false }));
+app.use(
+  session({
+    secret: "passport-tutorial",
+    cookie: { maxAge: 60000 },
+    resave: false,
+    saveUninitialized: false
+  })
+);
 app.use(passport.initialize());
 
 require("./config/passport")(passport);
 
-app.use(passport.session())
+app.use(passport.session());
 
 const users = require("./routes/api/user");
 const posts = require("./routes/api/post");
 
 // CORS
 var corsOptions = {
-  origin: 'http://localhost', // habilita CORS apenas em produção
+  origin: "http://localhost", // habilita CORS apenas em produção
   optionsSuccessStatus: 200
-}
+};
 app.use(cors(corsOptions));
 
 // Body Parser middleware
@@ -46,12 +53,16 @@ app.use(function(req, res, next) {
 });
 
 // DB config
-// const db = require("./config/keys").mongoURI;
+const db = require("./config/keys").mongoURI;
 
 // Connect to Mongo DB
-// mongoose.connect( db, { useNewUrlParser: true })
-//   .then(() => console.log("MongoDB Connected"))
-//   .catch(err => console.log("Deu RUIM", err));
+mongoose
+  .connect(
+    db,
+    { useNewUrlParser: true }
+  )
+  .then(() => console.log("MongoDB Connected"))
+  .catch(err => console.log("Deu RUIM", err));
 
 // Use routes
 app.use("/api/user", users);
@@ -63,21 +74,21 @@ app.listen(port, () => console.log(`Server running on port ${port}`));
 
 app.get("/api", (req, res) => res.json({ msg: "Olha o pisão!" }));
 
-app.post('/login', (req, res, next) => {
-  passport.authenticate('local', (err, user, info) => {
-    req.login(user, (err) => {
-      return res.json({msg: 'You were authenticated & logged in!'});
-    })
+app.post("/login", (req, res, next) => {
+  passport.authenticate("local", (err, user, info) => {
+    req.login(user, err => {
+      return res.json({ msg: "You were authenticated & logged in!" });
+    });
   })(req, res, next);
-})
+});
 
-app.get('/authrequired', (req, res) => {
-  if(req.isAuthenticated()) {
-    res.json({msg: 'you hit the authentication endpoint'});
+app.get("/authrequired", (req, res) => {
+  if (req.isAuthenticated()) {
+    res.json({ msg: "you hit the authentication endpoint" });
   } else {
-    res.json({msg: 'voce precisa logar'});
-    res.redirect('/')
+    res.json({ msg: "voce precisa logar" });
+    res.redirect("/");
   }
-})
+});
 
 module.exports = app;
