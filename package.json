@@ -19,10 +19,12 @@
   },
   "homepage": "https://github.com/hugogbs/dev-web-backend#readme",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
     "cors": "^2.8.4",
     "express": "^4.16.3",
     "express-session": "^1.15.6",
+    "jsonwebtoken": "^8.3.0",
     "memory-cache": "^0.2.0",
     "morgan": "^1.9.0",
     "nodemon": "^1.18.4",

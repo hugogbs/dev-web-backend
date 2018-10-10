@@ -21,10 +21,9 @@ app.use(
     saveUninitialized: false
   })
 );
+
 app.use(passport.initialize());
-
 require("./config/passport")(passport);
-
 app.use(passport.session());
 
 const users = require("./routes/api/user");
@@ -62,7 +61,7 @@ mongoose
     { useNewUrlParser: true }
   )
   .then(() => console.log("MongoDB Connected"))
-  .catch(err => console.log("Deu RUIM", err));
+  .catch(err => console.log(err));
 
 // Use routes
 app.use("/api/user", users);
@@ -71,8 +70,6 @@ app.use("/api/post", posts);
 const port = process.env.PORT || 3000;
 
 app.listen(port, () => console.log(`Server running on port ${port}`));
-
-app.get("/api", (req, res) => res.json({ msg: "Olha o pisão!" }));
 
 app.post("/login", (req, res, next) => {
   passport.authenticate("local", (err, user, info) => {
