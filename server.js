@@ -22,12 +22,12 @@ app.use(
   })
 );
 
+const users = require("./routes/api/user");
+const posts = require("./routes/api/post");
+
 app.use(passport.initialize());
 require("./config/passport")(passport);
 app.use(passport.session());
-
-const users = require("./routes/api/user");
-const posts = require("./routes/api/post");
 
 // CORS
 var corsOptions = {

@@ -3,6 +3,7 @@ const router = express.Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const keys = require("../../config/keys");
+const passport = require("passport");
 
 const User = require("../../models/User");
 
@@ -49,7 +50,7 @@ router.post("/", (req, res) => {
 });
 
 // @route   POST api/users/login
-// @desc    User login
+// @desc    User login / Returning JTW Token
 // @access  Public
 router.post("/login", (req, res) => {
   const username = req.body.username;
@@ -57,6 +58,8 @@ router.post("/login", (req, res) => {
 
   // Find user by username
   User.findOne({ username }).then(user => {
+    // Adicionar validação das entradas do usuário
+    const errors = {};
     if (!user) {
       errors.username = "User not found";
       return res.status(400).json(errors);
@@ -83,16 +86,29 @@ router.post("/login", (req, res) => {
             });
           }
         );
+      } else {
+        console.log("not match");
+        errors.password = "Password incorrect";
+        return res.status(400).json(errors);
       }
     });
   });
 });
 
-// @route   GET api/users/:id/profile
-// @desc    User profile information
+// @route   GET api/users/current
+// @desc    Return current user
 // @access  Private
-router.get("/:id/profile", (req, res) =>
-  res.json({ temp: "Perfil do usuário " + req.params.id })
+router.get(
+  "/current",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    res.json({
+      username: req.user.username,
+      name: req.user.name,
+      surname: req.user.surname,
+      email: req.user.email
+    });
+  }
 );
 
 module.exports = router;

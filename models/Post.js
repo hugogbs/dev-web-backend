@@ -16,8 +16,10 @@ const PostSchema = new Schema({
     required: true
   },
   createdBy: {
-    type: Schema.Types.ObjectId,
-    ref: "User" // Ver como fazer essa referência corretamente
+    // type: Schema.Types.ObjectId,
+    // ref: "User" // Ver como fazer essa referência corretamente
+    type: String,
+    required: true
   }
 });
 
