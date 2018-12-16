@@ -4,6 +4,11 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const keys = require("../../config/keys");
 const passport = require("passport");
+const gravatar = require("gravatar");
+
+// Load input validation
+const validateRegisterInput = require("../../validation/register");
+const validateLoginInput = require("../../validation/login");
 
 const User = require("../../models/User");
 
@@ -16,11 +21,23 @@ router.get("/test", (req, res) => res.json({ msg: "Users Works" }));
 // @desc    Register user
 // @access  Public
 router.post("/", (req, res) => {
+  const { errors, isValid } = validateRegisterInput(req.body);
+
+  // Check Validation
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
+
   User.findOne({ email: req.body.email }).then(user => {
-    if (!user) {
+    if (user) {
       errors.email = "Email already used";
-      return res.status(400).json.errors;
+      return res.status(400).json(errors);
     } else {
+      const avatar = gravatar.url(req.body.email, {
+        s: "200", // Size
+        r: "pg", // Rating
+        d: "mm" // Default
+      });
       const newUser = new User({
         name: req.body.name,
         surname: req.body.surname,
@@ -28,14 +45,13 @@ router.post("/", (req, res) => {
         birthday: req.body.birthday,
         email: req.body.email,
         username: req.body.username,
-        password: req.body.password
+        password: req.body.password,
+        avatar
       });
 
       bcrypt.genSalt(10, (err, salt) => {
         bcrypt.hash(newUser.password, salt, (err, hash) => {
           if (err) {
-            console.log("a", newUser);
-            console.log("b", req.body);
             throw err;
           }
           newUser.password = hash;
@@ -53,15 +69,20 @@ router.post("/", (req, res) => {
 // @desc    User login / Returning JTW Token
 // @access  Public
 router.post("/login", (req, res) => {
-  const username = req.body.username;
+  const { errors, isValid } = validateLoginInput(req.body);
+
+  // Check Validation
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
+  const email = req.body.email;
   const password = req.body.password;
 
   // Find user by username
-  User.findOne({ username }).then(user => {
+  User.findOne({ email }).then(user => {
     // Adicionar validação das entradas do usuário
-    const errors = {};
     if (!user) {
-      errors.username = "User not found";
+      errors.email = "User not found";
       return res.status(400).json(errors);
     }
 
@@ -72,7 +93,8 @@ router.post("/login", (req, res) => {
         const payload = {
           username: user.username,
           name: user.name,
-          surname: user.surname
+          surname: user.surname,
+          avatar: user.avatar
         }; // Create a Jwt payload
 
         jwt.sign(

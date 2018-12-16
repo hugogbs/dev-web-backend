@@ -22,18 +22,20 @@
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
     "cors": "^2.8.4",
-    "express": "^4.16.3",
+    "express": "^4.16.4",
     "express-session": "^1.15.6",
-    "jsonwebtoken": "^8.3.0",
+    "gravatar": "^1.8.0",
+    "jsonwebtoken": "^8.4.0",
     "memory-cache": "^0.2.0",
     "morgan": "^1.9.0",
-    "nodemon": "^1.18.4",
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "validator": "^10.9.0"
   },
   "devDependencies": {
-    "mongoose": "^5.2.14",
+    "mongoose": "^5.4.0",
+    "nodemon": "^1.18.9",
     "supertest": "^3.3.0"
   }
 }

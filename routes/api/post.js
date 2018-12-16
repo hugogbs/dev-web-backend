@@ -1,8 +1,6 @@
 const express = require("express");
 const router = express.Router();
 
-module.exports = router;
-
 // @route   GET api/post/test
 // @desc    Tests post route
 // @access  Public
@@ -23,3 +21,5 @@ router.delete("/:id", (req, res) =>
 router.post("/:id", (req, res) =>
   res.json({ msg: "Cria o post " + req.params.id })
 );
+
+module.exports = router;
