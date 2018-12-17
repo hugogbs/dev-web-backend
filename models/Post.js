@@ -3,6 +3,10 @@ const Schema = mongoose.Schema;
 
 // Create Post Schema
 const PostSchema = new Schema({
+  user: {
+    type: Schema.Types.ObjectId,
+    ref: "users"
+  },
   title: {
     type: String,
     required: true
@@ -11,16 +15,51 @@ const PostSchema = new Schema({
     type: Date,
     default: Date.now
   },
-  body: {
+  text: {
     type: String,
     required: true
   },
-  createdBy: {
-    // type: Schema.Types.ObjectId,
-    // ref: "User" // Ver como fazer essa referência corretamente
-    type: String,
-    required: true
-  }
+  name: {
+    type: String
+  },
+  avatar: {
+    type: String
+  },
+  likes: [
+    {
+      user: {
+        type: Schema.Types.ObjectId,
+        ref: "users"
+      }
+    }
+  ],
+  comments: [
+    {
+      user: {
+        type: Schema.Types.ObjectId,
+        ref: "users"
+      },
+      text: {
+        type: String,
+        required: true
+      },
+      avatar: {
+        type: String
+      },
+      date: {
+        type: Date,
+        default: Date.now
+      },
+      likes: [
+        {
+          user: {
+            type: Schema.Types.ObjectId,
+            ref: "users"
+          }
+        }
+      ]
+    }
+  ]
 });
 
 module.exports = Post = mongoose.model("posts", PostSchema);
