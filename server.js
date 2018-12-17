@@ -5,29 +5,25 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const passport = require("passport");
 const session = require("express-session");
-const LocalStrategy = require("passport-local").Strategy;
-
-// mongoose.connect('mongodb://localhost:4000/test', { useNewUrlParser: true })
-//   .then(() => console.log("MongoDB Connected"))
-//   .catch(err => console.log(err));
 
 const app = express();
 
-app.use(
-  session({
-    secret: "passport-tutorial",
-    cookie: { maxAge: 60000 },
-    resave: false,
-    saveUninitialized: false
-  })
-);
-
-app.use(passport.initialize());
-require("./config/passport")(passport);
-app.use(passport.session());
+// app.use(
+//   session({
+//     secret: "passport-tutorial",
+//     cookie: { maxAge: 60000 },
+//     resave: false,
+//     saveUninitialized: false
+//   })
+// );
 
 const users = require("./routes/api/user");
 const posts = require("./routes/api/post");
+const profile = require("./routes/api/profile");
+
+app.use(passport.initialize());
+require("./config/passport")(passport);
+// app.use(passport.session());
 
 // CORS
 var corsOptions = {
@@ -66,6 +62,7 @@ mongoose
 // Use routes
 app.use("/api/user", users);
 app.use("/api/post", posts);
+app.use("/api/profile", profile);
 
 const port = process.env.PORT || 3000;
 
