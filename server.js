@@ -8,22 +8,12 @@ const session = require("express-session");
 
 const app = express();
 
-// app.use(
-//   session({
-//     secret: "passport-tutorial",
-//     cookie: { maxAge: 60000 },
-//     resave: false,
-//     saveUninitialized: false
-//   })
-// );
-
 const users = require("./routes/api/user");
 const posts = require("./routes/api/post");
 const profile = require("./routes/api/profile");
 
 app.use(passport.initialize());
 require("./config/passport")(passport);
-// app.use(passport.session());
 
 // CORS
 var corsOptions = {
@@ -64,7 +54,7 @@ app.use("/api/user", users);
 app.use("/api/post", posts);
 app.use("/api/profile", profile);
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5000;
 
 app.listen(port, () => console.log(`Server running on port ${port}`));
 
