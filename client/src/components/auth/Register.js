@@ -40,7 +40,7 @@ class Register extends Component {
       password2: this.state.password2
     };
 
-    this.props.registerUser(newUser);
+    this.props.registerUser(newUser, this.props.history);
   };
 
   render() {
@@ -166,7 +166,7 @@ class Register extends Component {
                   )}
                 </div>
                 {/* A confimação de senha ainda não está implementada no backend */}
-                {/* <div className="form-group">
+                <div className="form-group">
                   <input
                     type="password"
                     className={classnames("form-control", {
@@ -180,7 +180,7 @@ class Register extends Component {
                   {errors.password2 && (
                     <div className="invalid-feedback">{errors.password2}</div>
                   )}
-                </div> */}
+                </div>
                 <input type="submit" className="btn btn-info btn-block mt-4" />
               </form>
             </div>
