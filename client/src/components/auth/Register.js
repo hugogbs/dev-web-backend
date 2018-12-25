@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import classnames from "classnames";
 import { connect } from "react-redux";
 import { registerUser } from "../../actions/authActions";
+import TextFieldGroup from "../common/TextFieldGroup";
 
 class Register extends Component {
   constructor() {
@@ -59,133 +59,74 @@ class Register extends Component {
               <h1 className="display-4 text-center">Sign Up</h1>
               <p className="lead text-center">Create your Link account</p>
               <form onSubmit={this.onSubmit}>
-                <div className="form-group">
-                  <input
-                    type="text"
-                    className={classnames("form-control", {
-                      "is-invalid": errors.name
-                    })}
-                    placeholder="Name"
-                    name="name"
-                    value={this.state.name}
-                    onChange={this.onChange}
-                  />
-                  {errors.name && (
-                    <div className="invalid-feedback">{errors.name}</div>
-                  )}
-                </div>
-                <div className="form-group">
-                  <input
-                    type="text"
-                    className={classnames("form-control", {
-                      "is-invalid": errors.surname
-                    })}
-                    placeholder="Surname"
-                    name="surname"
-                    value={this.state.surname}
-                    onChange={this.onChange}
-                  />
-                  {errors.surname && (
-                    <div className="invalid-feedback">{errors.surname}</div>
-                  )}
-                </div>
-                <div className="form-group">
-                  <input
-                    type="text"
-                    className={classnames("form-control", {
-                      "is-invalid": errors.username
-                    })}
-                    placeholder="Username"
-                    name="username"
-                    value={this.state.username}
-                    onChange={this.onChange}
-                  />
-                  {errors.username && (
-                    <div className="invalid-feedback">{errors.username}</div>
-                  )}
-                </div>
-                <div className="form-group">
-                  <input
-                    type="text"
-                    className={classnames("form-control", {
-                      "is-invalid": errors.address
-                    })}
-                    placeholder="Address"
-                    name="address"
-                    value={this.state.address}
-                    onChange={this.onChange}
-                  />
-                  {errors.address && (
-                    <div className="invalid-feedback">{errors.address}</div>
-                  )}
-                </div>
-                <small className="form-text text-muted">
-                  Input your birthday
-                </small>
-                <div className="form-group">
-                  <input
-                    type="date"
-                    className={classnames("form-control", {
-                      "is-invalid": errors.birthday
-                    })}
-                    placeholder="Birthday"
-                    name="birthday"
-                    value={this.state.birthday}
-                    onChange={this.onChange}
-                  />
-                  {errors.birthday && (
-                    <div className="invalid-feedback">{errors.birthday}</div>
-                  )}
-                </div>
-                <div className="form-group">
-                  <input
-                    type="email"
-                    className={classnames("form-control", {
-                      "is-invalid": errors.email
-                    })}
-                    placeholder="Email Address"
-                    name="email"
-                    value={this.state.email}
-                    onChange={this.onChange}
-                  />
-                  {errors.email && (
-                    <div className="invalid-feedback">{errors.email}</div>
-                  )}
-                  <small className="form-text text-muted">
-                    This site uses Gravatar so if you want a profile image, use
-                    a Gravatar email
-                  </small>
-                </div>
-                <div className="form-group">
-                  <input
-                    type="password"
-                    className={classnames("form-control", {
-                      "is-invalid": errors.password
-                    })}
-                    placeholder="Password"
-                    name="password"
-                    value={this.state.password}
-                    onChange={this.onChange}
-                  />
-                  {errors.password && (
-                    <div className="invalid-feedback">{errors.password}</div>
-                  )}
-                </div>
-                <div className="form-group">
-                  <input
-                    type="password"
-                    className={classnames("form-control", {
-                      "is-invalid": errors.password2
-                    })}
-                    placeholder="Confirm Password"
-                    name="password2"
-                    value={this.state.password2}
-                    onChange={this.onChange}
-                  />
-                  {errors.password2 && (
-                    <div className="invalid-feedback">{errors.password2}</div>
-                  )}
-                </div>
+                <TextFieldGroup
+                  placeholder="Name"
+                  type="text"
+                  name="name"
+                  value={this.state.name}
+                  onChange={this.onChange}
+                  error={errors.name}
+                />
+
+                <TextFieldGroup
+                  placeholder="Surname"
+                  type="text"
+                  name="surname"
+                  value={this.state.surname}
+                  onChange={this.onChange}
+                  error={errors.surname}
+                />
+                <TextFieldGroup
+                  placeholder="Username"
+                  type="text"
+                  name="username"
+                  value={this.state.username}
+                  onChange={this.onChange}
+                  error={errors.username}
+                />
+                <TextFieldGroup
+                  placeholder="Address"
+                  type="text"
+                  name="address"
+                  value={this.state.address}
+                  onChange={this.onChange}
+                  error={errors.address}
+                />
+                <TextFieldGroup
+                  placeholder="Birthday"
+                  type="date"
+                  name="birthday"
+                  value={this.state.birthday}
+                  onChange={this.onChange}
+                  error={errors.birthday}
+                  info="Input your birthday"
+                />
+                <TextFieldGroup
+                  placeholder="Email"
+                  type="email"
+                  name="email"
+                  value={this.state.email}
+                  onChange={this.onChange}
+                  error={errors.email}
+                  info="This site uses Gravatar so if you want a profile image, use
+                  a Gravatar email"
+                />
+                <TextFieldGroup
+                  placeholder="Password"
+                  type="password"
+                  name="password"
+                  value={this.state.password}
+                  onChange={this.onChange}
+                  error={errors.password}
+                />
+                <TextFieldGroup
+                  placeholder="Confirm Password"
+                  type="password"
+                  name="password2"
+                  value={this.state.password2}
+                  onChange={this.onChange}
+                  error={errors.password2}
+                />
                 <input type="submit" className="btn btn-info btn-block mt-4" />
               </form>
             </div>
