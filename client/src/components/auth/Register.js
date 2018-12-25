@@ -16,6 +16,12 @@ class Register extends Component {
     };
   }
 
+  componentDidMount() {
+    if (this.props.auth.isAuthenticated) {
+      this.props.history.push("/dashboard");
+    }
+  }
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.errors) {
       this.setState({ errors: nextProps.errors });
@@ -165,7 +171,6 @@ class Register extends Component {
                     <div className="invalid-feedback">{errors.password}</div>
                   )}
                 </div>
-                {/* A confimação de senha ainda não está implementada no backend */}
                 <div className="form-group">
                   <input
                     type="password"
